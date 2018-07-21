@@ -19,6 +19,7 @@ defmodule TimelineWeb.Router do
     get "/", PageController, :index
     resources "/clients", ClientController, except: [:new, :edit]
     resources "/projects", ProjectController, except: [:new, :edit]
+    resources "/tasks", TaskController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
