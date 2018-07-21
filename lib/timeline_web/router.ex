@@ -17,7 +17,8 @@ defmodule TimelineWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/clients", ClientController
+    resources "/clients", ClientController, except: [:new, :edit]
+    resources "/projects", ProjectController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
