@@ -114,7 +114,9 @@ defmodule Timeline.Work do
 
   """
   def list_projects do
-    Repo.all(Project)
+    Project
+    |> preload([:client])
+    |> Repo.all()
   end
 
   @doc """
@@ -131,7 +133,11 @@ defmodule Timeline.Work do
       ** (Ecto.NoResultsError)
 
   """
-  def get_project!(id), do: Repo.get!(Project, id)
+  def get_project!(id) do
+    Project
+    |> preload([:client])
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a project.

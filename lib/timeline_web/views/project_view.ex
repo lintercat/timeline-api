@@ -8,8 +8,4 @@ defmodule TimelineWeb.ProjectView do
   has_one :client,
     include: true,
     serializer: TimelineWeb.ClientView
-
-  def client(project, _conn) do
-    Work.get_client!(project.client_id)
-  end
 end
