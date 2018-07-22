@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :timeline, Timeline.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "timeline_dev",
+  username: System.get_env("POSTGRES_USERNAME"),
+  password: System.get_env("POSTGRES_PASSWORD"),
+  database: System.get_env("POSTGRES_DATABASE"),
   hostname: "localhost",
   pool_size: 10
