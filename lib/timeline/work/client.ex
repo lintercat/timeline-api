@@ -1,6 +1,7 @@
 defmodule Timeline.Work.Client do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Timeline.Work.Client
 
 
   schema "clients" do
@@ -10,7 +11,7 @@ defmodule Timeline.Work.Client do
   end
 
   @doc false
-  def changeset(client, attrs) do
+  def changeset(%Client{} = client, attrs) do
     client
     |> cast(attrs, [:name])
     |> validate_required([:name])

@@ -1,17 +1,16 @@
 defmodule TimelineWeb.ProjectView do
   use TimelineWeb, :view
-  alias TimelineWeb.ProjectView
+  use JaSerializer.PhoenixView
 
-  def render("index.json", %{projects: projects}) do
-    %{data: render_many(projects, ProjectView, "project.json")}
-  end
+  attributes [:name, :client_id]
 
-  def render("show.json", %{project: project}) do
-    %{data: render_one(project, ProjectView, "project.json")}
-  end
+  has_one :client,
+    link: "/api/clients/:client_id",
+    field: :client_id,
+    include: true,
+    serializer: TimelineWeb.ClientView
 
-  def render("project.json", %{project: project}) do
-    %{id: project.id,
-      name: project.name}
+  def client(project, _conn) do
+    project.client
   end
 end
