@@ -11,6 +11,11 @@ defmodule TimelineWeb.TaskController do
     render(conn, "index.json-api", data: tasks)
   end
 
+  def running(conn, _params) do
+    task = Work.running_task()
+    render(conn, "show.json-api", data: task)
+  end
+
   def create(conn, %{"task" => task_params}) do
     with {:ok, %Task{} = task} <- Work.create_task(task_params) do
       conn
@@ -37,6 +42,14 @@ defmodule TimelineWeb.TaskController do
     task = Work.get_task!(id)
     with {:ok, %Task{}} <- Work.delete_task(task) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def stop(conn, %{"id" => id}) do
+    task = Work.get_task!(id)
+
+    with {:ok, %Task{} = task} <- Work.stop_task(task) do
+      render(conn, "show.json-api", data: task)
     end
   end
 end

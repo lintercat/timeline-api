@@ -124,6 +124,23 @@ defmodule Timeline.Work do
   end
 
   @doc """
+  Returns the list of tasks.
+
+  ## Examples
+
+      iex> list_tasks()
+      [%Task{}, ...]
+
+  """
+  def running_task do
+    Task
+    |> preload([:project])
+    |> where([t], is_nil(t.end_at))
+    |> first()
+    |> Repo.one()
+  end
+
+  @doc """
   Gets a single task.
 
   Raises `Ecto.NoResultsError` if the Task does not exist.
@@ -177,6 +194,22 @@ defmodule Timeline.Work do
   def update_task(%Task{} = task, attrs) do
     task
     |> Task.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Stops a task.
+
+  ## Examples
+
+      iex> stop_task(task)
+      {:ok, %Task{}}
+
+  """
+  def stop_task(%Task{} = task) do
+    task
+    |> Task.changeset(%{})
+    |> Task.stop()
     |> Repo.update()
   end
 

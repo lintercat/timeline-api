@@ -27,7 +27,9 @@ defmodule TimelineWeb.Router do
   scope "/api", TimelineWeb do
     pipe_through :json_api
 
+    get "/tasks/running", TaskController, :running
     resources "/projects", ProjectController, except: [:new, :edit]
     resources "/tasks", TaskController, except: [:new, :edit]
+    get "/tasks/:id/stop", TaskController, :stop
   end
 end

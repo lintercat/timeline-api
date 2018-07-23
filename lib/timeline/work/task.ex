@@ -15,11 +15,16 @@ defmodule Timeline.Work.Task do
   @doc false
   def changeset(%Task{} = task, attrs) do
     task
-    |> cast(attrs, [:end_at, :project_id])
+    |> cast(attrs, [:project_id])
   end
 
   def assign_starting_datetime_to_now(changeset) do
     changeset
     |> put_change(:start_at, DateTime.utc_now)
+  end
+
+  def stop(changeset) do
+    changeset
+    |> put_change(:end_at, DateTime.utc_now)
   end
 end
