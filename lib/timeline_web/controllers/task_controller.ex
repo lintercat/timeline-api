@@ -8,7 +8,7 @@ defmodule TimelineWeb.TaskController do
 
   def index(conn, _params) do
     tasks = Work.list_tasks()
-    render(conn, "index.json", tasks: tasks)
+    render(conn, "index.json-api", data: tasks)
   end
 
   def create(conn, %{"task" => task_params}) do
@@ -16,20 +16,20 @@ defmodule TimelineWeb.TaskController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", task_path(conn, :show, task))
-      |> render("show.json", task: task)
+      |> render("show.json-api", data: task)
     end
   end
 
   def show(conn, %{"id" => id}) do
     task = Work.get_task!(id)
-    render(conn, "show.json", task: task)
+    render(conn, "show.json-api", data: task)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = Work.get_task!(id)
 
     with {:ok, %Task{} = task} <- Work.update_task(task, task_params) do
-      render(conn, "show.json", task: task)
+      render(conn, "show.json-api", data: task)
     end
   end
 
