@@ -1,12 +1,11 @@
 defmodule Timeline.Work.Project do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Timeline.Work.{Client, Project}
+  alias Timeline.Work.Project
 
 
   schema "projects" do
     field :name, :string
-    belongs_to :client, Client
 
     timestamps()
   end
@@ -14,7 +13,7 @@ defmodule Timeline.Work.Project do
   @doc false
   def changeset(%Project{} = project, attrs) do
     project
-    |> cast(attrs, [:name, :client_id])
+    |> cast(attrs, [:name])
     |> validate_required([:name])
   end
 end
