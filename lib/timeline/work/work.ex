@@ -216,7 +216,9 @@ defmodule Timeline.Work do
 
   """
   def list_tasks do
-    Repo.all(Task)
+    Task
+    |> preload([:project])
+    |> Repo.all()
   end
 
   @doc """
@@ -233,7 +235,11 @@ defmodule Timeline.Work do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id) do
+    Task
+    |> preload([:project])
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a task.
@@ -250,6 +256,7 @@ defmodule Timeline.Work do
   def create_task(attrs \\ %{}) do
     %Task{}
     |> Task.changeset(attrs)
+    |> Task.assign_starting_datetime_to_now()
     |> Repo.insert()
   end
 
